@@ -1,38 +1,36 @@
-def merge_sort(arr):
-    if len(arr) <= 1:
-        return arr
+def remove_duplicates(arr):
+    return list(set(arr))
 
-    mid = len(arr) // 2
-    left_half = arr[:mid]
-    right_half = arr[mid:]
+def selection_sort(arr):
+    for i in range(len(arr)):
+        min_index = i
+        for j in range(i+1, len(arr)):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
 
-    left_half = merge_sort(left_half)
-    right_half = merge_sort(right_half)
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n-1):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
 
-    return merge(left_half, right_half)
+# Get the input array from the user
+input_str = input("Enter the array of integers (separated by spaces): ")
+input_array = list(map(int, input_str.split()))
 
-def merge(left, right):
-    merged = []
-    left_index = right_index = 0
+# Remove duplicates from the array
+unique_array = remove_duplicates(input_array)
 
-    while left_index < len(left) and right_index < len(right):
-        if left[left_index] < right[right_index]:
-            merged.append(left[left_index])
-            left_index += 1
-        else:
-            merged.append(right[right_index])
-            right_index += 1
+# Sort the array using selection sort
+selection_sorted_array = selection_sort(unique_array)
 
-    merged.extend(left[left_index:])
-    merged.extend(right[right_index:])
-    return merged
+# Sort the array using bubble sort
+bubble_sorted_array = bubble_sort(unique_array)
 
-# Get the input list of marks from the user
-marks_str = input("Enter the list of marks (separated by spaces): ")
-marks_list = list(map(int, marks_str.split()))
-
-# Sort the list using merge sort
-sorted_list = merge_sort(marks_list)
-
-# Print the final sorted list
-print("List after sorting is:", sorted_list)
+# Print the sorted arrays
+print("Sorted array (Selection Sort):", selection_sorted_array)
+print("Sorted array (Bubble Sort):", bubble_sorted_array)
