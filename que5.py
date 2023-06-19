@@ -1,38 +1,37 @@
-def merge_sort(arr):
-    if len(arr) <= 1:
-        return arr
+def binary_search(arr, target):
+    left = 0
+    right = len(arr) - 1
 
-    mid = len(arr) // 2
-    left_half = arr[:mid]
-    right_half = arr[mid:]
-
-    left_half = merge_sort(left_half)
-    right_half = merge_sort(right_half)
-
-    return merge(left_half, right_half)
-
-def merge(left, right):
-    merged = []
-    left_index = right_index = 0
-
-    while left_index < len(left) and right_index < len(right):
-        if left[left_index] < right[right_index]:
-            merged.append(left[left_index])
-            left_index += 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid
+        elif arr[mid] < target:
+            left = mid + 1
         else:
-            merged.append(right[right_index])
-            right_index += 1
+            right = mid - 1
 
-    merged.extend(left[left_index:])
-    merged.extend(right[right_index:])
-    return merged
+    return -1
 
-# Get the input list of marks from the user
-marks_str = input("Enter the list of marks (separated by spaces): ")
-marks_list = list(map(int, marks_str.split()))
+# Get the input array from the user
+input_str = input("Enter the array of integers (separated by spaces): ")
+input_array = list(map(int, input_str.split()))
 
-# Sort the list using merge sort
-sorted_list = merge_sort(marks_list)
+# Sort the input array
+sorted_array = sorted(input_array)
 
-# Print the final sorted list
-print("List after sorting is:", sorted_list)
+# Print the sorted array
+print("Sorted array:", sorted_array)
+
+# Get the element to search from the user
+target = int(input("Enter the element to search: "))
+
+# Perform binary search
+index = binary_search(sorted_array, target)
+
+if index != -1:
+    # Count the number of occurrences of the element
+    count = sorted_array.count(target)
+    print("Number of occurrences of element", target, "is:", count)
+else:
+    print("Element", target, "not found in the array.")
